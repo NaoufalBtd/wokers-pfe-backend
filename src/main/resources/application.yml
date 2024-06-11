@@ -5,9 +5,9 @@ app:
 
 # Spring DataSource
 spring.datasource:
-  url: jdbc:mysql://localhost:3306/YOUR_DATABASE_NAME_HERE?useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
+  url: jdbc:mysql://localhost:3306/wokers-pfe?useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
   username: root
-  password: boris1997
+  password:
 
   # If the connection is too long in idle state
   dbcp.test-while-idle: true

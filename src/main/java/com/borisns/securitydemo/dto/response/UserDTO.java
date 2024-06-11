@@ -1,7 +1,10 @@
 package com.borisns.securitydemo.dto.response;
 
 import com.borisns.securitydemo.model.Authority;
+import com.borisns.securitydemo.model.Freelancer;
 import com.borisns.securitydemo.model.User;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,7 +20,11 @@ public class UserDTO {
     private List<String> authorities;
     private UserTokenDTO token;
 
-
+    @Getter
+    @Setter
+    private Freelancer freelancer;
+    public UserDTO() {
+    }
     public UserDTO(User user) {
         this.id = user.getId();
         this.username = user.getUsername();

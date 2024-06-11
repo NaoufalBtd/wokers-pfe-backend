@@ -110,4 +110,10 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new ApiRequestException("Token can not be refreshed.");
         }
     }
+
+    public boolean checkToken(String token) {
+        String username = tokenUtils.getUsernameFromToken(token);
+        User user = (User) loadUserByUsername(username);
+        return tokenUtils.validateToken(token, user);
+    }
 }

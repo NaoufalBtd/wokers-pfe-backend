@@ -1,10 +1,12 @@
 package com.borisns.securitydemo.controller;
 
 import com.borisns.securitydemo.dto.request.PasswordChangerDTO;
+import com.borisns.securitydemo.dto.request.RegisterDto;
 import com.borisns.securitydemo.dto.response.UserDTO;
 import com.borisns.securitydemo.dto.response.UserTokenDTO;
 import com.borisns.securitydemo.security.TokenUtils;
 import com.borisns.securitydemo.dto.request.LoginDTO;
+import com.borisns.securitydemo.service.UserService;
 import com.borisns.securitydemo.service.impl.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,8 @@ public class AuthenticationController {
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/login")
     public ResponseEntity<UserDTO> login(@RequestBody @Valid LoginDTO authenticationRequest) {
@@ -44,6 +48,18 @@ public class AuthenticationController {
     public ResponseEntity changePassword(@RequestBody @Valid PasswordChangerDTO passwordChanger) {
         userDetailsService.changePassword(passwordChanger.getOldPassword(), passwordChanger.getNewPassword());
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<UserDTO> register(@RequestBody RegisterDto registerDto) {
+        return new ResponseEntity<>(userService.register(registerDto), HttpStatus.CREATED);
+    }
+
+
+    @GetMapping("is-logged-in")
+    public ResponseEntity<Boolean> isLoggedIn(HttpServletRequest request) {
+        String token = request.getHeader("Authorization").substring(7);
+        return ResponseEntity.ok(userDetailsService.checkToken(token));
     }
 
 }
